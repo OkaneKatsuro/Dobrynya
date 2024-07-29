@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { GlareCardDemo } from "./cards";
 
 const Hero = () => {
   const [typedText, setTypedText] = useState("");
@@ -39,6 +40,7 @@ const Hero = () => {
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold basis-2/3">
           {typedText}
         </h1>
+        
       </div>
     </section>
   );

@@ -1,0 +1,12 @@
+.section {
+    height: 100%;
+    position: relative;
+
+    // Переменные цветов
+    $topColor: #0f8d0f; // Серый цвет
+    $bottomColor: #fff; // Белый цвет
+
+    // Создание градиента с помощью линейного градиента
+    background: linear-gradient(to bottom, $topColor 50%, $bottomColor 50%);
+}
+
