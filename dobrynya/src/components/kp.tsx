@@ -1,6 +1,7 @@
 "use client"
 import React from 'react';
 import { DirectionAwareHoverDemo } from './img';
+import { HoverBorderGradientDemo } from './button';
 
 const RentalOffer = () => {
   return (
@@ -10,12 +11,13 @@ const RentalOffer = () => {
       <DirectionAwareHoverDemo/>
       </div>
       <div className="lg:w-1/2 justify-center">
-        <p className="px-10 py-5 mb-4 text-3xl text-center text-black">
+        <p className="px-10 text-3xl text-center text-black">
           Торговый центр Добрыня, расположенный в самом сердце района Кукковка, приглашает вас арендовать помещения как внутри здания, так и на прилегающей территории. Мы тщательно рассмотрим вашу заявку, учтем особенности вашего бизнеса и ваши пожелания, чтобы предложить оптимальное место для аренды.
         </p>
         <p>
           Наши отношения с клиентами строятся на доверии и партнерстве. Мы всегда выполняем свои обязательства и стремимся к взаимовыгодному сотрудничеству. С нетерпением ждем возможности работать с вами!
         </p>
+        <HoverBorderGradientDemo/>
       </div>
     </div>
   );

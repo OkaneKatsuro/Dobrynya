@@ -40,13 +40,13 @@ const Header = () => {
           </div>
         </div>
         <div className="hidden md:flex items-center space-x-10 mx-10">
-          <Link href="/towns" className="text-2xl text-green-500 hover:text-red-500">
+          <Link href="/towns" className="text-2xl text-green-800 hover:text-red-500">
             Магазины
           </Link>
-          <Link href="/towns" className="text-2xl text-green-500 hover:text-red-500">
+          <Link href="/towns" className="text-2xl text-green-800 hover:text-red-500">
             Свободные площади
           </Link>
-          <Link href="/towns" className="text-2xl text-green-500 hover:text-red-500">
+          <Link href="/SectionContacts" className="text-2xl text-green-800 hover:text-red-500">
             Контакты
           </Link>
           {menuItemsForBurger.map((item, index) => (
@@ -54,7 +54,7 @@ const Header = () => {
               {/* Additional items can be added here if needed */}
             </React.Fragment>
           ))}
-          <Link href="https://vk.com/dobrynia_ptz" className="text-green-500 hover:text-red-500">
+          <Link href="https://vk.com/dobrynia_ptz" className="text-green-800 hover:text-red-500">
             <FaVk size={30} />
           </Link>
         </div>

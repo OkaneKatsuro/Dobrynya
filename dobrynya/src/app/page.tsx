@@ -1,6 +1,7 @@
 import { GlareCardDemo } from "@/components/cards";
 import Form from "@/components/form";
 import Hero from "@/components/hero";
+
 import RentalOffer from "@/components/kp";
 import { YandexMap } from "@/components/map";
 import { LayoutGridDemo } from "@/components/pics";
@@ -17,8 +18,8 @@ export default function Home() {
     <>
      <Header/>
     <Hero/>
-    <Form/>
     <SetionGlareCardDemo/>
+    <Form/>
     <SectionKP/>
     <SetionYandexMap/>
     <SectionPics/>

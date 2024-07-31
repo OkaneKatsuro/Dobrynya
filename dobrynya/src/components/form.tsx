@@ -2,13 +2,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import "@/components/styles/Form.scss";
-import Link from "next/link";
-import {
-  useForm,
-  SubmitHandler,
-  UseFormRegister,
-  RegisterOptions,
-} from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { sendEmail } from "./utils/send-email";
 import Input from "./ui/inputs/forminput";
 
@@ -16,7 +10,7 @@ export type FormData = {
   name: string;
   email: string;
   message: string;
-  idea: string; // added field
+  idea: string;
 };
 
 const Form: React.FC = () => {
@@ -82,7 +76,7 @@ const Form: React.FC = () => {
                           id="idea"
                           {...register("idea")}
                           placeholder="Ваша идея..."
-                          className="border border-gray-300 rounded-md p-2 w-full h-32 resize-none"
+                          className="border border-gray-300 rounded-md p-2 w-full h-32 resize-none text-black"
                         ></textarea>
                       </div>
                       <div className="flex-col justify-center items-center">

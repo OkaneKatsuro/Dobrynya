@@ -7,8 +7,8 @@ import { FaVk } from 'react-icons/fa'; // VKontakte icon from react-icons librar
 
 const Footer = () => {
   return (
-    <footer className="bg-green-700 p-6 w-full">
-      <div className="flex flex-wrap">
+    <footer className="bg-green-800 pt-12 w-full">
+      <div className="flex flex-wrap pl-6">
         {/* First Column */}
         <div className="w-full md:w-1/4 mr-6 mb-6 md:mb-0 flex flex-col items-center md:items-start">
           <Link href="/" passHref>

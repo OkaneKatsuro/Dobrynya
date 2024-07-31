@@ -25,7 +25,7 @@ const Input: React.FC<InputProps> = ({
           type="text"
           id={name}
           autoComplete={name}
-          className={`block flex-1 border-0 bg-transparent py-1.5 pl-1 outline-none ${error ? "border-red-500" : ""}`}
+          className={`block flex-1 border-0 bg-transparent py-1.5 pl-1 outline-none text-black ${error ? "border-red-500" : ""}`}
           placeholder={placeholder}
         />
       </div>
