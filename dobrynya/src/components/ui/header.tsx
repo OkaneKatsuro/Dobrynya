@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { FaVk } from "react-icons/fa";  // Import VK icon from react-icons
 import Dropdown from "./Pages";
 import BurgerDropdown from "./dropdown/burger_drop";
 
@@ -45,15 +46,17 @@ const Header = () => {
           <Link href="/towns" className="text-2xl text-green-500 hover:text-red-500">
             Свободные площади
           </Link>
-
           <Link href="/towns" className="text-2xl text-green-500 hover:text-red-500">
             Контакты
           </Link>
           {menuItemsForBurger.map((item, index) => (
             <React.Fragment key={`burger_${index}`}>
-              
+              {/* Additional items can be added here if needed */}
             </React.Fragment>
           ))}
+          <Link href="https://vk.com/yourpage" className="text-green-500 hover:text-red-500">
+            <FaVk size={30} />
+          </Link>
         </div>
         {menuItemsForBurger.map((item, index) => (
           <React.Fragment key={`burger_${index}`}>
@@ -69,6 +72,7 @@ const Header = () => {
               </Link>
             )}
           </React.Fragment>
+          
         ))}
       </div>
     </header>

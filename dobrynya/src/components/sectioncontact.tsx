@@ -6,7 +6,7 @@ import Contact from './contact';
 
 const SectionContacts = () => {
   return (
-    <section className="relative flex justify-center items-center bg-white z-1">
+    <section className="relative flex justify-center items-center bg-white h-max z-1">
       <Contact/>
     </section>
   );

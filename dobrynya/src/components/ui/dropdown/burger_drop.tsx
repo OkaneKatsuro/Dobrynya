@@ -1,17 +1,14 @@
 import { GiHamburgerMenu } from "react-icons/gi";
-
 import React, { useState } from "react";
 import Link from "next/link";
-
 import { MenuItem } from "@/components/ui/header";
-
 import { IconContext } from "react-icons";
-import { IoIosArrowDown } from "react-icons/io";
 import OffcanvasMobile, { OffcanvasMobileItem } from "../mobileoffcanvas";
 
 interface Props {
   item: MenuItem;
 }
+
 const menuItemsAbout: OffcanvasMobileItem[] = [
   {
     title: "Города-побратимы",
@@ -33,7 +30,6 @@ const menuItemsAbout: OffcanvasMobileItem[] = [
   {
     title: "Санкт\u2011Петербург",
     children: [
-      
       {
         title: "Экономика Санкт\u2011Петербурга",
         route: "/economics",
@@ -97,17 +93,18 @@ export default function BurgerDropdown(props: Props) {
   const closeOffcanvas = () => {
     setIsOpenn(false);
   };
+
   const transClass = isOpen ? "flex" : "hidden";
 
   return (
     <>
       <div className="relative flex items-center justify-center">
         <button
-          className="hover:text-blue-400 flex flex-row "
+          className="hover:text-blue-400 flex flex-row"
           onClick={openOffcanvas}
         >
           <IconContext.Provider
-            value={{ className: "block md:hidden shared-class", size: "35" }}
+            value={{ className: "block md:hidden shared-class", size: "35", color: "green" }}
           >
             <GiHamburgerMenu />
           </IconContext.Provider>
