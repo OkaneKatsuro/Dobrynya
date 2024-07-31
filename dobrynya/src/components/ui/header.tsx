@@ -54,7 +54,7 @@ const Header = () => {
               {/* Additional items can be added here if needed */}
             </React.Fragment>
           ))}
-          <Link href="https://vk.com/yourpage" className="text-green-500 hover:text-red-500">
+          <Link href="https://vk.com/dobrynia_ptz" className="text-green-500 hover:text-red-500">
             <FaVk size={30} />
           </Link>
         </div>

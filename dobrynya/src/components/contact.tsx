@@ -43,7 +43,7 @@ const Footer = () => {
           <p className="text-lg mb-2">
             Торговый центр "Добрыня", г. Петрозаводск, микрорайон Кукковка, ул. Ровио, д.11
           </p>
-          <Link href="https://vk.com/yourpage" className="text-white-500 hover:text-red-500 flex justify-center">
+          <Link href="https://vk.com/dobrynia_ptz" className="text-white-500 hover:text-red-500 flex justify-center">
             <FaVk size={60} />
           </Link>
         </div>

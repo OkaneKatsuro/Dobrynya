@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MenuItem } from "@/components/ui/header";
 import { IconContext } from "react-icons";
 import OffcanvasMobile, { OffcanvasMobileItem } from "../mobileoffcanvas";
+import { FaVk } from "react-icons/fa";
 
 interface Props {
   item: MenuItem;
@@ -11,67 +12,12 @@ interface Props {
 
 const menuItemsAbout: OffcanvasMobileItem[] = [
   {
-    title: "Города-побратимы",
-    route: "/towns",
+    title: "Магазины",
+    route: "/town",
   },
   {
-    title: "Услуги",
-    children: [
-      {
-        title: "Буклеты",
-        route: "/buklet",
-      },
-      {
-        title: "Услуги в свере миграции",
-        route: "/migration",
-      },
-    ],
-  },
-  {
-    title: "Санкт\u2011Петербург",
-    children: [
-      {
-        title: "Экономика Санкт\u2011Петербурга",
-        route: "/economics",
-      },
-      {
-        title: "Культура Санкт\u2011Петербурга",
-        route: "/culture",
-      },
-      {
-        title: "Символы",
-        route: "/symbol",
-      },
-      {
-        title: "Духовно-нравственные ценности",
-        route: "/petersburgSoul",
-      },
-    ],
-  },
-  {
-    title: "O нас",
-    children: [
-      {
-        title: "История",
-        route: "/history",
-      },
-      {
-        title: "Цели и задачи",
-        route: "/aim",
-      },
-      {
-        title: "Новости",
-        route: "/news",
-      },
-      {
-        title: "Проекты",
-        route: "/Project",
-      },
-      {
-        title: "Реквизиты",
-        route: "/requisites",
-      },
-    ],
+    title: "Свободные площади",
+    route: "/town"
   },
 ];
 
@@ -100,23 +46,21 @@ export default function BurgerDropdown(props: Props) {
     <>
       <div className="relative flex items-center justify-center">
         <button
-          className="hover:text-blue-400 flex flex-row"
+          className="flex flex-row hover:text-red-400"
           onClick={openOffcanvas}
         >
           <IconContext.Provider
-            value={{ className: "block md:hidden shared-class", size: "35", color: "green" }}
+            value={{ className: "block md:hidden", size: "35", color: "green" }}
           >
             <GiHamburgerMenu />
           </IconContext.Provider>
         </button>
       </div>
-      {isOpen ? (
+      {isOpen && (
         <div
           className="fixed top-0 bottom-0 left-0 z-20 bg-black/40"
           onClick={toggle}
         ></div>
-      ) : (
-        <></>
       )}
       {isOpenn && (
         <OffcanvasMobile onClose={closeOffcanvas} menuItems={menuItemsAbout} />

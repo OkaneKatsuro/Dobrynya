@@ -150,12 +150,6 @@ const OffcanvasMobile: React.FC<OffcanvasProps> = ({ onClose, menuItems }) => {
                 </Link>
               )
             )}
-            <button
-              onClick={handleContactOpen}
-              className="text-lg px-4 py-1 text-left hover:text-blue-400"
-            >
-              Контакты
-            </button>
           </div>
         </div>
       </div>
