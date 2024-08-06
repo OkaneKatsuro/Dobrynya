@@ -131,7 +131,7 @@ export default function Admin() {
                 <h3 className="text-xl font-bold mb-2">
                   <a
                     href={blog.link}
-                    className="hover:text-blue-600 transition-colors duration-300"
+                    className="text-black-600 transition-colors duration-300"
                   >
                     {blog.title}
                   </a>
@@ -172,7 +172,7 @@ export default function Admin() {
             rows={2}
             {...register("title", { required: true })}
             required
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block text-black w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           ></textarea>
           <br />
           <label htmlFor="description" className="block font-medium text-black text-2xl ">
@@ -183,7 +183,7 @@ export default function Admin() {
             rows={4}
             {...register("description", { required: true })}
             required
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block text-black w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           ></textarea>
           <label htmlFor="link" className="block font-medium text-black text-2xl mt-5">
             Ссылка:
@@ -194,7 +194,7 @@ export default function Admin() {
             rows={1}
             {...register("link", { required: true })}
             required
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block text-black w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           ></textarea>
           <br />
           <label

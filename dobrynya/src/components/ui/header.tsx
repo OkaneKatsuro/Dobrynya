@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FaVk } from "react-icons/fa";  // Import VK icon from react-icons
-import Dropdown from "./Pages";
 import BurgerDropdown from "./dropdown/burger_drop";
 
 export interface MenuItem {
@@ -40,10 +39,10 @@ const Header = () => {
           </div>
         </div>
         <div className="hidden md:flex items-center space-x-10 mx-10">
-          <Link href="/towns" className="text-2xl text-green-800 hover:text-red-500">
+          <Link href="/project" className="text-2xl text-green-800 hover:text-red-500">
             Магазины
           </Link>
-          <Link href="/towns" className="text-2xl text-green-800 hover:text-red-500">
+          <Link href="/freeproject" className="text-2xl text-green-800 hover:text-red-500">
             Свободные площади
           </Link>
           <Link href="/SectionContacts" className="text-2xl text-green-800 hover:text-red-500">
