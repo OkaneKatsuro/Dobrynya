@@ -4,6 +4,7 @@ import Hero from "@/components/hero";
 
 import RentalOffer from "@/components/kp";
 import { YandexMap } from "@/components/map";
+import News from "@/components/news";
 import { LayoutGridDemo } from "@/components/pics";
 import { SetionGlareCardDemo } from "@/components/sectioncards";
 import SectionContacts from "@/components/sectioncontact";
@@ -23,6 +24,7 @@ export default function Home() {
     <SectionKP/>
     <SetionYandexMap/>
     <SectionPics/>
+    <News/>
     <SectionContacts/>
     </>
   );

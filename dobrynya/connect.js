@@ -11,7 +11,7 @@ const db = new sqlite3.Database(
   }
 );
 
-const value = ["fluttrium@gmail.com", "Zalupa228!"];
+const value = ["rovio11@mail.ru", "Dobrynya2024!"];
 
 const insertSql = `INSERT INTO users (username, password) VALUES(?, ?)`;
 

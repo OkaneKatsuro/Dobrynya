@@ -1,6 +1,6 @@
 import Admin from "@/components/admin";
 
-export default function Home() {
+export default function AdminNews() {
   return (
     <>
       <Admin />
