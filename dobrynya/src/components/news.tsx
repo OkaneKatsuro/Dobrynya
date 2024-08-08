@@ -35,7 +35,7 @@ export default function News() {
     return (
       <section className="relative flex bg-white h-max z-1 w-full justify-center py-8">
         <div className="w-full px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
             {Array.from({ length: 3 }).map((_, index) => (
               <div
                 key={index}
@@ -57,11 +57,11 @@ export default function News() {
 
   return (
     <section className="relative flex bg-white h-max z-1 w-full justify-center py-8">
-      <div className="max-w-screen-sm px-4 pb-12">
+      <div className="max-w-screen-lg px-4 pb-12">
         <h2 className="text-3xl font-bold text-center text-green-800 mb-6">
           Новости Торгового центра "Добрыня"
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
           {blogs.map((blog) => (
             <div
               key={blog.id}

@@ -76,27 +76,35 @@ const cards = [
     content: <SkeletonOne />,
     className: "md:col-span-2",
     thumbnail:
-      "/snimok.png",
+      "/Foto4.jpg",
   },
   {
     id: 2,
     content: <SkeletonTwo />,
     className: "col-span-1",
     thumbnail:
-      "/snimok.png",
+      "/Foto3.jpg",
   },
   {
     id: 3,
     content: <SkeletonThree />,
     className: "col-span-1",
     thumbnail:
-      "/snimok.png",
+      "/Foto2.jpg",
   },
   {
     id: 4,
     content: <SkeletonFour />,
     className: "md:col-span-2",
-    thumbnail:
-      "/snimok.png",
-  },
+    thumbnail: "/Foto1.jpg",
+    style: { 
+        backgroundImage: "url(/Foto1.jpg)",
+        backgroundSize: "contain", // Изображение будет масштабироваться, чтобы полностью поместиться в контейнер
+        backgroundPosition: "start", // Изображение будет центрировано
+        backgroundRepeat: "no-repeat", // Изображение не будет повторяться
+        width: "100%", // Ширина контейнера будет 100%
+        height: "100%", // Высота контейнера будет 100%
+    },
+},
+
 ];
