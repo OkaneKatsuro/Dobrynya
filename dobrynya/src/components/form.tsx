@@ -41,7 +41,7 @@ const Form: React.FC = () => {
             Чем мы можем вам помочь? Оставьте свои контактные данные и расскажите о своем запросе — мы свяжемся с вами в ближайшее время
           </p>
         </div>
-        <div className="flex justify-center items-center py-8 md:w-2/3">
+        <div className="flex justify-center items-center pt-8 md:w-2/3">
           <div className="bg-white drop-shadow-lg container w-full border md:border-gray-300 rounded py-2 mx-auto">
             <div className="m-9">
               <form onSubmit={handleSubmit(onSubmit)}>

@@ -7,7 +7,7 @@ const RentalOffer = () => {
   return (
     <div className="flex flex-col lg:flex-row items-center p-6 bg-white shadow-md rounded-md">
      
-      <div className="lg:w-1/2 lg:pl-6 mt-6 lg:mt-0">
+      <div className="lg:w-1/2 lg:pl-6 lg:mt-0">
       <DirectionAwareHoverDemo/>
       </div>
       <div className="lg:w-1/2 justify-center">

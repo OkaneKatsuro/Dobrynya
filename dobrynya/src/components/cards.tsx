@@ -3,7 +3,7 @@ import { GlareCard } from "./ui/glare-card";
 
 export function GlareCardDemo() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 p-4">
       <GlareCard className="flex flex-col items-center justify-center">
       <p className="font-bold text-white text-4xl">1000 м^</p>
         <p className="font-normal text-center text-neutral-100 mt-4 mx-2">

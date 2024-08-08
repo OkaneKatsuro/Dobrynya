@@ -11,7 +11,7 @@ export function DirectionAwareHoverDemo() {
   const imageUrl =
     "/snimok.png";
   return (
-    <div className="h-[40rem] relative  flex items-center justify-center width={400}
+    <div className="h-[30rem] relative  flex items-center justify-center width={400}
         height={400}">
       <DirectionAwareHover imageUrl={imageUrl}>
         <p className="font-bold text-xl">ТЦ Добрыня</p>

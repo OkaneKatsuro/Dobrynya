@@ -4,8 +4,7 @@ import { GlareCardDemo } from "./cards";
 
 const Hero = () => {
   const [typedText, setTypedText] = useState("");
-  const text =
-    "Т.оргоый центр Добрыня";
+  const text = "Торговый центр Добрыня";
 
   useEffect(() => {
     let currentIndex = 0; // создаем переменную для обозначения индекса символа в тексте
@@ -15,11 +14,8 @@ const Hero = () => {
           clearInterval(intervalId);
           return prevText; // возвращаем текст
         }
-        console.log("текущий текст:", prevText);
-        console.log("текущий буква", text[currentIndex]);
         return prevText + text[currentIndex]; // добавляем букву с индексом
       });
-      console.log("Current index:", currentIndex);
       currentIndex++; // увеличиваем индекс на 1
     }, 90); // задержка
 
@@ -27,7 +23,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative h-screen">
+    <section className="relative h-screen overflow-hidden">
       <video
         className="fixed inset-0 w-full h-full object-cover blur-sm"
         src="/Dobrynya.mp4"
@@ -36,11 +32,10 @@ const Hero = () => {
         loop
       ></video>
 
-      <div className="fixed inset-0 flex items-center justify-center text-center text-white px-4 md:px-20">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold basis-2/3">
+      <div className="fixed inset-0 flex items-center justify-center text-center text-white px-4 md:px-8 lg:px-16">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold max-w-2xl">
           {typedText}
         </h1>
-        
       </div>
     </section>
   );
