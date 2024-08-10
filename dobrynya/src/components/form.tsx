@@ -33,7 +33,7 @@ const Form: React.FC = () => {
   }, [isChecked]);
 
   return (
-    <section className="section flex justify-center">
+    <section id="contact-form" className="section flex justify-center">
       <div className="flex flex-col md:flex-row items-center w-full max-w-screen-lg">
         <div className="hidden md:flex md:w-2/3 mb-8 md:mb-0 md:pr-8 items-center justify-center">
           <div className="bg-gray-100 border border-gray-300 rounded-lg p-6 shadow-md">

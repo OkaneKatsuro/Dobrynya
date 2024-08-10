@@ -3,11 +3,20 @@ import React from "react";
 import { HoverBorderGradient } from "./ui/hover-border-gradient";
 
 export function HoverBorderGradientDemo() {
+  // Функция для обработки клика и прокрутки к секции с формой
+  const scrollToForm = () => {
+    const formSection = document.getElementById("contact-form");
+    if (formSection) {
+      formSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <div className="flex justify-center text-center p-4">
+    <div className="relative flex justify-center text-center p-4 z-0">
       <HoverBorderGradient
         containerClassName="rounded-full"
         as="button"
+        onClick={scrollToForm}  // Добавляем обработчик клика
         className="dark:bg-black bg-white text-black dark:text-white flex items-center justify-center space-x-2 py-2 px-4"
       >
         <span className="text-base sm:text-lg">Оставить заявку на аренду</span>

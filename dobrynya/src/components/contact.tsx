@@ -10,7 +10,7 @@ const Footer = () => {
     <footer className="bg-green-800 pt-12 w-full">
       <div className="flex flex-wrap pl-6">
         {/* First Column */}
-        <div className="w-full md:w-1/4 mr-6 mb-6 md:mb-0 flex flex-col items-center md:items-start">
+        <div className="w-full md:w-1/4 mr-6 mb-6 md:mb-0 flex flex-col items-center md:items-start md:mt-4">
           <Link href="/" passHref>
             <Image
               src="/logo_dobrynya.jpeg"
@@ -23,14 +23,14 @@ const Footer = () => {
         </div>
 
         {/* Second Column */}
-        <div className="w-full md:w-1/4 mb-6 md:mb-0 text-white text-center md:text-left">
+        <div className="w-full md:w-1/4 mb-6 md:mb-0 text-white text-center md:text-left md:mt-4">
           <h3 className="text-xl font-semibold mb-2">Режим работы:</h3>
           <p className="mb-2"><strong>Продуктовый зал:</strong> 8:30 - 20:30 ежедневно</p>
           <p><strong>Промтоварный зал:</strong> 10:00 - 19:00 ежедневно</p>
         </div>
 
         {/* Third Column */}
-        <div className="w-full md:w-1/5 text-white text-center md:text-left mb-6">
+        <div className="w-full md:w-1/5 text-white text-center md:text-left mb-6 md:mb-0 md:mt-4">
           <h3 className="text-xl font-semibold mb-2">Пункты выдачи:</h3>
           <p className="mb-2"><strong>WILDBERRIES:</strong> 9:00 - 20:00</p>
           <p className="mb-2"><strong>OZON:</strong> 10:00 - 21:00</p>
@@ -57,14 +57,14 @@ const Footer = () => {
 
       {/* Divider and Footer Info */}
       <div className="border-t border-white mt-6 pt-4 text-center text-white text-sm flex items-center justify-center">
-        <Link href={'https://example.com'} target="_blank" rel="noopener noreferrer" className="flex items-center">
+        <Link href={'https://fluttrium.ru/'} target="_blank" rel="noopener noreferrer" className="flex items-center">
           <p className="mr-2">
             2024 Дизайн и разработка
           </p>
           <img 
             src="/image-removebg-preview.png" 
             alt="Fluttrium Logo" 
-            className="w-32 h-auto ml-2" 
+            className="w-48 h-auto ml-2" 
           />
         </Link>
       </div>

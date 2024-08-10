@@ -44,7 +44,7 @@ const Header = () => {
           <Link href="/freeproject" className="text-2xl text-green-700 hover:text-red-500">
             Свободные площади
           </Link>
-          <Link href="/SectionContacts" className="text-2xl text-green-700 hover:text-red-500">
+          <Link href="#section-contacts" className="text-2xl text-green-700 hover:text-red-500">
             Контакты
           </Link>
           <Link href="https://vk.com/dobrynia_ptz" className="text-green-700 hover:text-red-500">
@@ -69,7 +69,7 @@ const Header = () => {
           <Link href="/freeproject" className="block text-lg text-green-700 hover:text-red-500 mb-4">
             Свободные площади
           </Link>
-          <Link href="/SectionContacts" className="block text-lg text-green-700 hover:text-red-500 mb-4">
+          <Link href="#section-contacts" className="block text-lg text-green-700 hover:text-red-500 mb-4">
             Контакты
           </Link>
           <Link href="https://vk.com/dobrynia_ptz" className="block text-green-700 hover:text-red-500">
