@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
   const mailOptions: Mail.Options = {
     from: "fluttrium@gmail.com",
-    to: "fluttrium@gmail.com",
+    to: "rovio11@mail.ru",
     // cc: email, (uncomment this line if you want to send a copy to the sender)
     subject: `Message from ${name} (${email})`,
     text: message,

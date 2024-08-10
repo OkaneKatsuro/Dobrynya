@@ -15,7 +15,7 @@ export function DirectionAwareHoverDemo() {
         height={400}">
       <DirectionAwareHover imageUrl={imageUrl}>
         <p className="font-bold text-xl">ТЦ Добрыня</p>
-        <p className="font-normal text-sm">1200 / квадратных метров</p>
+        <p className="font-normal text-sm">3000 / квадратных метров</p>
       </DirectionAwareHover>
     </div>
   );
