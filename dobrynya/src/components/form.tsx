@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client";
 import { useEffect, useState } from "react";
 import "@/components/styles/Form.scss";
@@ -37,9 +36,11 @@ const Form: React.FC = () => {
     <section className="section flex justify-center">
       <div className="flex flex-col md:flex-row items-center w-full max-w-screen-lg">
         <div className="hidden md:flex md:w-2/3 mb-8 md:mb-0 md:pr-8 items-center justify-center">
-          <p className="font-medium text-black dark:text-black-200 text-2xl md:text-4xl text-center">
-            Чем мы можем вам помочь? Оставьте свои контактные данные и расскажите о своем запросе — мы свяжемся с вами в ближайшее время
-          </p>
+          <div className="bg-gray-100 border border-gray-300 rounded-lg p-6 shadow-md">
+            <p className="font-medium text-black dark:text-black-200 text-2xl md:text-4xl text-center">
+              Чем мы можем вам помочь? Оставьте свои контактные данные и расскажите о своем запросе — мы свяжемся с вами в ближайшее время
+            </p>
+          </div>
         </div>
         <div className="flex justify-center items-center pt-8 md:w-2/3">
           <div className="bg-white drop-shadow-lg container w-full border md:border-gray-300 rounded py-2 mx-auto">

@@ -1,26 +1,21 @@
 "use client";
-import { useEffect, useState } from "react";
-import { GlareCardDemo } from "./cards";
+import { FlipWords } from "./ui/flip-words";
+import './styles/hero.scss'; // Adjust the path if needed
 
 const Hero = () => {
-  const [typedText, setTypedText] = useState("");
-  const text = "Торговый центр Добрыня";
+  const words = ["Торговый", "центр", "Добрыня"];
 
-  useEffect(() => {
-    let currentIndex = 0; // создаем переменную для обозначения индекса символа в тексте
-    const intervalId = setInterval(() => {
-      setTypedText((prevText) => {
-        if (currentIndex >= text.length) {
-          clearInterval(intervalId);
-          return prevText; // возвращаем текст
-        }
-        return prevText + text[currentIndex]; // добавляем букву с индексом
-      });
-      currentIndex++; // увеличиваем индекс на 1
-    }, 90); // задержка
+  // Define styles for specific letters
+  const letterStyles = {
+    "Добрыня": {
+      3: { color: 'red' } // Index of "р" in "Добрыня" (0-based index)
+    }
+  };
 
-    return () => clearInterval(intervalId);
-  }, []);
+  // Define style for the whole word
+  const wordStyle = {
+    color: 'green'
+  };
 
   return (
     <section className="relative h-screen overflow-hidden">
@@ -32,10 +27,15 @@ const Hero = () => {
         loop
       ></video>
 
-      <div className="fixed inset-0 flex items-center justify-center text-center text-white px-4 md:px-8 lg:px-16">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold max-w-2xl">
-          {typedText}
-        </h1>
+      <div className="fixed inset-0 flex items-center justify-center text-center px-4 md:px-8 lg:px-16">
+        <div className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold max-w-2xl leading-tight tracking-wider space-y-2 old-russian-style">
+          <FlipWords 
+            words={words} 
+            letterStyles={letterStyles} 
+            wordStyle={wordStyle} 
+            animationType="none" // Custom prop to disable animation
+          />
+        </div>
       </div>
     </section>
   );

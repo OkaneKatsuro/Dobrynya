@@ -1,0 +1,27 @@
+/* hero.scss */
+@font-face {
+    font-family: 'OldRussianFont';
+    src: url('/path/to/old-russian-font.woff2') format('woff2');
+  }
+  
+  .old-russian-style {
+    font-family: 'OldRussianFont', serif; // Apply the Old Russian font
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); // Add text shadow for effect
+    letter-spacing: 1px; // Add spacing between letters
+    font-weight: bold; // Make the font bold
+    // Add more styles as needed to mimic Old Russian style
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .fade-in {
+    animation: fadeIn 2s ease-out;
+  }
+  

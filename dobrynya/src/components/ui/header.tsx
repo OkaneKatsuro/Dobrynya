@@ -38,23 +38,23 @@ const Header = () => {
 
         {/* Desktop Menu */}
         <nav className="hidden md:flex items-center space-x-10 mx-10">
-          <Link href="/project" className="text-2xl text-green-800 hover:text-red-500">
+          <Link href="/project" className="text-2xl text-green-700 hover:text-red-500">
             Магазины
           </Link>
-          <Link href="/freeproject" className="text-2xl text-green-800 hover:text-red-500">
+          <Link href="/freeproject" className="text-2xl text-green-700 hover:text-red-500">
             Свободные площади
           </Link>
-          <Link href="/SectionContacts" className="text-2xl text-green-800 hover:text-red-500">
+          <Link href="/SectionContacts" className="text-2xl text-green-700 hover:text-red-500">
             Контакты
           </Link>
-          <Link href="https://vk.com/dobrynia_ptz" className="text-green-800 hover:text-red-500">
+          <Link href="https://vk.com/dobrynia_ptz" className="text-green-700 hover:text-red-500">
             <FaVk size={30} />
           </Link>
         </nav>
 
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center">
-          <button onClick={toggleOffcanvas} className="text-green-800 hover:text-red-500">
+          <button onClick={toggleOffcanvas} className="text-green-700 hover:text-red-500">
             {isOpen ? <AiOutlineClose size={24} /> : <AiOutlineMenu size={24} />}
           </button>
         </div>
@@ -63,16 +63,16 @@ const Header = () => {
        {/* Mobile Menu */}
        {isOpen && (
         <div className="md:hidden bg-white w-full px-4 sm:px-6 py-5 border-t border-gray-200">
-          <Link href="/project" className="block text-lg text-green-800 hover:text-red-500 mb-4">
+          <Link href="/project" className="block text-lg text-green-700 hover:text-red-500 mb-4">
             Магазины
           </Link>
-          <Link href="/freeproject" className="block text-lg text-green-800 hover:text-red-500 mb-4">
+          <Link href="/freeproject" className="block text-lg text-green-700 hover:text-red-500 mb-4">
             Свободные площади
           </Link>
-          <Link href="/SectionContacts" className="block text-lg text-green-800 hover:text-red-500 mb-4">
+          <Link href="/SectionContacts" className="block text-lg text-green-700 hover:text-red-500 mb-4">
             Контакты
           </Link>
-          <Link href="https://vk.com/dobrynia_ptz" className="block text-green-800 hover:text-red-500">
+          <Link href="https://vk.com/dobrynia_ptz" className="block text-green-700 hover:text-red-500">
             <FaVk size={24} />
           </Link>
         </div>
