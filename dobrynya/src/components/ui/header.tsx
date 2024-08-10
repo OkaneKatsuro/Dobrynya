@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FaVk } from "react-icons/fa";  // Import VK icon from react-icons
+import { FaVk } from "react-icons/fa";
+import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";  // Import menu icons
 import BurgerDropdown from "./dropdown/burger_drop";
 
 export interface MenuItem {
@@ -15,12 +16,8 @@ export interface MenuItem {
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const openOffcanvas = () => {
+  const toggleOffcanvas = () => {
     setIsOpen(!isOpen);
-  };
-
-  const closeOffcanvas = () => {
-    setIsOpen(false);
   };
 
   return (
@@ -38,7 +35,9 @@ const Header = () => {
             </Link>
           </div>
         </div>
-        <div className="hidden md:flex items-center space-x-10 mx-10">
+
+        {/* Desktop Menu */}
+        <nav className="hidden md:flex items-center space-x-10 mx-10">
           <Link href="/project" className="text-2xl text-green-800 hover:text-red-500">
             Магазины
           </Link>
@@ -48,67 +47,38 @@ const Header = () => {
           <Link href="/SectionContacts" className="text-2xl text-green-800 hover:text-red-500">
             Контакты
           </Link>
-          {menuItemsForBurger.map((item, index) => (
-            <React.Fragment key={`burger_${index}`}>
-              {/* Additional items can be added here if needed */}
-            </React.Fragment>
-          ))}
           <Link href="https://vk.com/dobrynia_ptz" className="text-green-800 hover:text-red-500">
             <FaVk size={30} />
           </Link>
+        </nav>
+
+        {/* Mobile Menu Button */}
+        <div className="md:hidden flex items-center">
+          <button onClick={toggleOffcanvas} className="text-green-800 hover:text-red-500">
+            {isOpen ? <AiOutlineClose size={24} /> : <AiOutlineMenu size={24} />}
+          </button>
         </div>
-        {menuItemsForBurger.map((item, index) => (
-          <React.Fragment key={`burger_${index}`}>
-            {item.children ? (
-              <BurgerDropdown item={item} />
-            ) : (
-              <Link
-                className="text-green-500 hover:text-red-500"
-                href={item.route || ""}
-                key={`burger_${index}`}
-              >
-                {item.title}
-              </Link>
-            )}
-          </React.Fragment>
-          
-        ))}
       </div>
+
+       {/* Mobile Menu */}
+       {isOpen && (
+        <div className="md:hidden bg-white w-full px-4 sm:px-6 py-5 border-t border-gray-200">
+          <Link href="/project" className="block text-lg text-green-800 hover:text-red-500 mb-4">
+            Магазины
+          </Link>
+          <Link href="/freeproject" className="block text-lg text-green-800 hover:text-red-500 mb-4">
+            Свободные площади
+          </Link>
+          <Link href="/SectionContacts" className="block text-lg text-green-800 hover:text-red-500 mb-4">
+            Контакты
+          </Link>
+          <Link href="https://vk.com/dobrynia_ptz" className="block text-green-800 hover:text-red-500">
+            <FaVk size={24} />
+          </Link>
+        </div>
+      )}
     </header>
   );
 };
 
 export default Header;
-
-const menuItemsForBurger: MenuItem[] = [
-  {
-    title: "Продукты",
-    children: [
-      {
-        title: "История",
-        route: "/history",
-      },
-      {
-        title: "Цели и задачи",
-        route: "/aim",
-      },
-      {
-        title: "Новости",
-        route: "/news",
-      },
-      {
-        title: "Услуги в сфере миграции",
-        route: "/migration",
-      },
-      {
-        title: "Реквизиты",
-        route: "/requisites",
-      },
-      {
-        title: "Отчеты",
-        route: "/reports",
-      },
-      { title: "Города-побратимы", route: "/towns" },
-    ],
-  },
-];

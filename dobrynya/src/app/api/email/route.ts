@@ -3,35 +3,34 @@ import nodemailer from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
 
 export async function POST(request: NextRequest) {
-  const { email, name, message } = await request.json();
+  // Получаем данные из запроса
+  const { email, name, message, idea } = await request.json();
 
+  // Настройка транспорта для отправки почты
   const transport = nodemailer.createTransport({
-    host: "smtp.beget.com",
-    port: 2525,
-
-    /* 
-      setting service as 'gmail' is same as providing these setings:
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true
-      If you want to use a different email provider other than gmail, you need to provide these manually.
-      Or you can go use these well known services and their settings at
-      https://github.com/nodemailer/nodemailer/blob/master/lib/well-known/services.json
-  */
+    host: "smtp.gmail.com", // Или другой SMTP-сервер
+    port: 465,
+    secure: true, // true для порта 465, false для других портов
     auth: {
-      user: "fluttrium@gmail.com",
-      pass: "Zalupa228!",
+      user: "f.o.larionov@gmail.com", // Ваш email
+      pass: "wute drbj svwq jwnh", // Пароль приложения
     },
   });
 
+  // Параметры письма
   const mailOptions: Mail.Options = {
-    from: "fluttrium@gmail.com",
-    to: "rovio11@mail.ru",
-    // cc: email, (uncomment this line if you want to send a copy to the sender)
-    subject: `Message from ${name} (${email})`,
-    text: message,
+    from: "f.o.larionov@gmail.com", // Адрес отправителя
+    to: "rovio11@mail.ru", // Адрес получателя
+    subject: `Message from ${name} (${email})`, // Тема письма
+    text: `
+      Name: ${name}
+      Email: ${email}
+      Message: ${message}
+      Idea: ${idea}
+    `, // Тело письма
   };
 
+  // Отправка письма
   const sendMailPromise = () =>
     new Promise<string>((resolve, reject) => {
       transport.sendMail(mailOptions, function (err) {
