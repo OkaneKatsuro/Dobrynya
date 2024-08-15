@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://tcdobrynya.ru
+
+# Sitemaps
+Sitemap: https://tcdobrynya.ru/sitemap.xml
