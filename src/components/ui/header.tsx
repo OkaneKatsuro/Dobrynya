@@ -1,19 +1,15 @@
-"use client";
-
+"use client"
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FaVk } from "react-icons/fa";
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";  // Import menu icons
-import BurgerDropdown from "./dropdown/burger_drop";
+import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 
-export interface MenuItem {
-  title: string;
-  route?: string;
-  children?: MenuItem[];
+interface HeaderProps {
+  scrollToContacts: () => void;
 }
 
-const Header = () => {
+const Header: React.FC<HeaderProps> = ({ scrollToContacts }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOffcanvas = () => {
@@ -44,9 +40,9 @@ const Header = () => {
           <Link href="/freeproject" className="text-2xl text-green-700 hover:text-red-500">
             Свободные площади
           </Link>
-          <Link href="#section-contacts" className="text-2xl text-green-700 hover:text-red-500">
+          <button onClick={scrollToContacts} className="text-2xl text-green-700 hover:text-red-500">
             Контакты
-          </Link>
+          </button>
           <Link href="https://vk.com/dobrynia_ptz" className="text-green-700 hover:text-red-500">
             <FaVk size={30} />
           </Link>
@@ -60,8 +56,8 @@ const Header = () => {
         </div>
       </div>
 
-       {/* Mobile Menu */}
-       {isOpen && (
+      {/* Mobile Menu */}
+      {isOpen && (
         <div className="md:hidden bg-white w-full px-4 sm:px-6 py-5 border-t border-gray-200">
           <Link href="/project" className="block text-lg text-green-700 hover:text-red-500 mb-4">
             Магазины
@@ -69,9 +65,9 @@ const Header = () => {
           <Link href="/freeproject" className="block text-lg text-green-700 hover:text-red-500 mb-4">
             Свободные площади
           </Link>
-          <Link href="#section-contacts" className="block text-lg text-green-700 hover:text-red-500 mb-4">
+          <button onClick={scrollToContacts} className="block text-lg text-green-700 hover:text-red-500 mb-4">
             Контакты
-          </Link>
+          </button>
           <Link href="https://vk.com/dobrynia_ptz" className="block text-green-700 hover:text-red-500">
             <FaVk size={24} />
           </Link>

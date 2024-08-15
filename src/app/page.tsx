@@ -1,7 +1,8 @@
+"use client"
 import { GlareCardDemo } from "@/components/cards";
 import Form from "@/components/form";
 import Hero from "@/components/hero";
-
+import React, { useRef } from "react";
 import RentalOffer from "@/components/kp";
 import { YandexMap } from "@/components/map";
 import News from "@/components/news";
@@ -14,18 +15,26 @@ import { SetionYandexMap } from "@/components/sectionmap";
 import SectionPics from "@/components/sectionpics";
 import Header from "@/components/ui/header";
 
-export default function Home() {
+const Home: React.FC = () => {
+  const contactsRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollToContacts = () => {
+    contactsRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <>
-     <Header/>
-    <Hero/>
-    <SetionGlareCardDemo/>
-    <Form/>
-    <SectionKP/>
-    <SetionYandexMap/>
-    <SectionPics/>
-    <News/>
-    <SectionContacts/>
+      <Header scrollToContacts={scrollToContacts} />
+      <Hero />
+      <SetionGlareCardDemo />
+      <Form />
+      <SectionKP />
+      <SetionYandexMap />
+      <SectionPics />
+      <News />
+      <SectionContacts ref={contactsRef} />
     </>
   );
-}
+};
+
+export default Home;

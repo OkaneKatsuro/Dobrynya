@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint"
   },
@@ -15,6 +16,7 @@
     "framer-motion": "^11.3.24",
     "jose": "^5.6.3",
     "next": "14.2.5",
+    "next-sitemap": "^4.2.3",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.52.1",
@@ -22,6 +24,7 @@
     "react-router-dom": "^6.25.1",
     "sass": "^1.77.8",
     "send-email": "^1.1.3",
+    "sqlite3": "^5.1.7",
     "styled-components": "^6.1.12",
     "tailwind-merge": "^2.4.0"
   },

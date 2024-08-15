@@ -12,14 +12,14 @@ export async function POST(request: NextRequest) {
     port: 465,
     secure: true, // true для порта 465, false для других портов
     auth: {
-      user: "f.o.larionov@gmail.com", // Ваш email
-      pass: "wute drbj svwq jwnh", // Пароль приложения
+      user: "sendsynergia@gmail.com", // Ваш email
+      pass: "haae crbi kwxj dsji", // Пароль приложения
     },
   });
 
   // Параметры письма
   const mailOptions: Mail.Options = {
-    from: "f.o.larionov@gmail.com", // Адрес отправителя
+    from: "sendsynergia@gmail.com", // Адрес отправителя
     to: "rovio11@mail.ru", // Адрес получателя
     subject: `Message from ${name} (${email})`, // Тема письма
     text: `
