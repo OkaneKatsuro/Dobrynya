@@ -11,7 +11,7 @@ interface User {
 
 export async function initDatabase() {
   db = new sqlite3.Database(
-    "./collection.db",
+    "./tmp/collection.db",
     sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
     async (err) => {
       if (err) {
