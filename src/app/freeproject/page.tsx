@@ -5,9 +5,9 @@ import Header from "@/components/ui/header";
 import {useEffect, useRef, useState} from "react";
 
 
-export const revalidate = 0;
 
-export default async function Home() {
+
+export default  function Home() {
 
 
 
