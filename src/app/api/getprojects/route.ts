@@ -1,4 +1,4 @@
-"use server";
+
 import { NextRequest, NextResponse } from "next/server";
 import {
   closeDatabase,
@@ -11,6 +11,8 @@ initDatabase().catch((err) => {
   console.error("Не удалось инициализировать базу данных:", err);
   process.exit(1); // Завершаем процесс, если инициализация базы данных не удалась
 });
+
+export const revalidate = 0;
 
 export async function GET() {
   try {

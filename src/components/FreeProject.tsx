@@ -11,16 +11,31 @@ export interface FreeProjectItem {
     link: string;
 }
 
-interface ProjectsProps {
-    freeprojects: FreeProjectItem[],
-    loadingState: boolean
-}
 
 
-export default function FreeProject({freeprojects = [], loadingState}: ProjectsProps) {
+export default function FreeProject() {
 
+    const [blogs, setBlogs] = useState<FreeProjectItem[]>([]);
 
-    if (loadingState) {
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchProjects() {
+            try {
+                const res = await fetch("/api/getfreeproject"); // Вызов API метода GET
+                const data = await res.json();
+                setBlogs(data); // Устанавливаем полученные данные в состояние
+            } catch (error) {
+                console.error("Ошибка при загрузке проектов:", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchProjects();
+    }, []);
+
+    if (loading) {
         return (
             <section className="relative flex bg-white h-max z-1 w-full justify-center py-32">
                 <div className="w-screen py-8">
@@ -51,7 +66,7 @@ export default function FreeProject({freeprojects = [], loadingState}: ProjectsP
                     Свободные площади Торгового центра "Добрыня"
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {freeprojects.map((blog) => (
+                    {blogs.map((blog) => (
                         <div
                             key={blog.id}
                             className="bg-white shadow-md rounded-lg overflow-hidden"
