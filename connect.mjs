@@ -1,18 +1,14 @@
 import pg from 'pg';
+import dotenv from 'dotenv';
 
-// Создаем пул соединений с базой данных
+dotenv.config(); // Загрузите переменные окружения
+
 const { Pool } = pg;
 
 const pool = new Pool({
     connectionString: process.env.POSTGRES_URL,
-    ssl: {
-        rejectUnauthorized: false,
-    },
-});
+})
 
-const value = ["rovio11@mail.ru", "Dobrynya2024!"];
-
-// Инициализация базы данных: создание таблиц и вставка начальных данных
 async function initDatabase() {
     const client = await pool.connect();
 
@@ -41,7 +37,7 @@ async function initDatabase() {
 
         const insertUserQuery = `INSERT INTO users (username, password)
                                  VALUES ($1, $2) RETURNING id`;
-        const res = await client.query(insertUserQuery, value);
+        const res = await client.query(insertUserQuery, ["rovio11@mail.ru", "Dobrynya2024!"]);
         console.log(`User inserted with ID ${res.rows[0].id}`);
 
         await client.query(`
@@ -75,14 +71,9 @@ async function initDatabase() {
     }
 }
 
-// Закрытие соединения с базой данных (необходимо, если вы завершаете работу)
 async function closeDatabase() {
     await pool.end();
     console.log("Database connection closed.");
 }
 
-// Инициализация базы данных при старте приложения
 initDatabase().catch((err) => console.error("Initialization failed:", err));
-
-// Пример вызова функции закрытия базы данных (при необходимости)
-// closeDatabase();
