@@ -1,234 +1,215 @@
-import { rejects } from "assert";
-import { resolve } from "path";
-import sqlite3 from "sqlite3";
+import { Pool } from 'pg';
 
-let db: sqlite3.Database;
+const pool = new Pool({
+    connectionString: process.env.POSTGRES_URL,
+    ssl: {
+        rejectUnauthorized: false,
+    },
+});
 
 interface User {
-  username: string;
-  password: string;
+    username: string;
+    password: string;
 }
 
+// Инициализация базы данных: создание таблиц
 export async function initDatabase() {
-  db = new sqlite3.Database(
-    "./tmp/collection.db",
-    sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
-    async (err) => {
-      if (err) {
-        console.error("Ошибка открытия базы данных SQLite:", err.message);
+    const client = await pool.connect();
+
+    try {
+        await client.query(`
+            CREATE TABLE IF NOT EXISTS items (
+                id SERIAL PRIMARY KEY,
+                title TEXT,
+                description TEXT,
+                image TEXT,
+                link TEXT
+            )
+        `);
+        console.log("Создана таблица items.");
+    } catch (err) {
+        console.error("Ошибка при инициализации базы данных:", err instanceof Error ? err.message : "Неизвестная ошибка");
         throw err;
-      }
-      console.log("Подключение к базе данных SQLite выполнено успешно.");
-
-      // Создание таблицы items, если она не существует
-      await db.run(`
-      CREATE TABLE IF NOT EXISTS items (
-        id INTEGER PRIMARY KEY,
-        title TEXT,
-        description TEXT,
-        image TEXT,
-        link TEXT
-      )
-    `);
-
-      console.log("Создана таблица items.");
+    } finally {
+        client.release();
     }
-  );
 }
 
+// Добавление элемента в таблицу items
 export async function addItem(
-  title: string,
-  description: string,
-  image: string,
-  link: string
+    title: string,
+    description: string,
+    image: string,
+    link: string
 ): Promise<number> {
-  const insertSql = `INSERT INTO items(title, description, image, link) VALUES(?, ?, ?, ?)`;
-  const values = [title, description, image, link];
-
-  return new Promise<number>((resolve, reject) => {
-    db.run(insertSql, values, function (err) {
-      if (err) {
-        console.error("Ошибка при вставке элемента:", err.message);
-        reject(err);
-      }
-
-      const id = this.lastID; // Получаем ID последней вставленной строки
-      console.log(`Вставлена строка с ID ${id}`);
-      resolve(id);
-    });
-  });
+    const client = await pool.connect();
+    try {
+        const insertSql = `INSERT INTO items (title, description, image, link) VALUES ($1, $2, $3, $4) RETURNING id`;
+        const res = await client.query(insertSql, [title, description, image, link]);
+        const id = res.rows[0].id;
+        console.log(`Вставлена строка с ID ${id}`);
+        return id;
+    } catch (err) {
+        console.error("Ошибка при вставке элемента:", err instanceof Error ? err.message : "Неизвестная ошибка");
+        throw err;
+    } finally {
+        client.release();
+    }
 }
+
+// Получение всех новостей из базы данных
 export async function fetchNewsFromDatabase(): Promise<any[]> {
-  const selectSql = `SELECT * FROM items`;
-
-  return new Promise<any[]>((resolve, reject) => {
-    db.all(selectSql, (err, rows) => {
-      if (err) {
-        console.error(
-          "Ошибка при получении новостей из базы данных:",
-          err.message
-        );
-        reject(err);
-      }
-
-      resolve(rows); // Возвращаем массив объектов новостей из базы данных
-    });
-  });
+    const client = await pool.connect();
+    try {
+        const selectSql = `SELECT * FROM items`;
+        const res = await client.query(selectSql);
+        return res.rows;
+    } catch (err) {
+        console.error("Ошибка при получении новостей из базы данных:", err instanceof Error ? err.message : "Неизвестная ошибка");
+        throw err;
+    } finally {
+        client.release();
+    }
 }
+
+// Закрытие соединения с базой данных
 export async function closeDatabase() {
-  return new Promise<void>((resolve, reject) => {
-    db.close((err) => {
-      if (err) {
-        console.error("Ошибка при закрытии базы данных SQLite:", err.message);
-        reject(err);
-      }
-      console.log("Соединение с базой данных SQLite закрыто.");
-      resolve();
-    });
-  });
+    try {
+        await pool.end();
+        console.log("Соединение с базой данных PostgreSQL закрыто.");
+    } catch (err) {
+        console.error("Ошибка при закрытии базы данных:", err instanceof Error ? err.message : "Неизвестная ошибка");
+        throw err;
+    }
 }
 
+// Получение данных пользователя по имени пользователя
 export async function giveUser(username: string): Promise<User | null> {
-  const selectSql = `SELECT * FROM users WHERE username = ?`;
-
-  return new Promise<User | null>((resolve, reject) => {
-    db.get(selectSql, [username], (err, user: User) => {
-      if (err) {
-        console.error(
-          "Ошибка при получении данных пользователя из базы данных:",
-          err.message
-        );
-        reject(err);
-      } else {
-        resolve(user); // Возвращаем данные пользователя или null, если пользователь не найден
-      }
-    });
-  });
+    const client = await pool.connect();
+    try {
+        const selectSql = `SELECT * FROM users WHERE username = $1`;
+        const res = await client.query(selectSql, [username]);
+        return res.rows.length > 0 ? res.rows[0] : null;
+    } catch (err) {
+        console.error("Ошибка при получении данных пользователя из базы данных:", err instanceof Error ? err.message : "Неизвестная ошибка");
+        throw err;
+    } finally {
+        client.release();
+    }
 }
 
-export async function deletNews(id: string) {
-  const deletSql = `DELETE FROM items WHERE id = ?`;
-
-  return new Promise<void>((resolve, reject) => {
-    db.run(deletSql, id, function (err) {
-      if (err) {
-        console.error("Ошибка при удалении элемента:", err.message);
-        reject(err);
-      } else {
-        resolve();
-      }
-    });
-  });
+// Удаление новости по ID
+export async function deletNews(id: string): Promise<void> {
+    const client = await pool.connect();
+    try {
+        const deletSql = `DELETE FROM items WHERE id = $1`;
+        await client.query(deletSql, [id]);
+    } catch (err) {
+        console.error("Ошибка при удалении элемента:", err instanceof Error ? err.message : "Неизвестная ошибка");
+        throw err;
+    } finally {
+        client.release();
+    }
 }
 
+// Добавление проекта в таблицу project
 export async function addProject(
-  title: string,
-  description: string,
-  image: string,
-  link: string
+    title: string,
+    description: string,
+    image: string,
+    link: string
 ): Promise<number> {
-  const insertSql = `INSERT INTO project (title, description, image, link) VALUES(?, ?, ?, ?)`;
-  const values = [title, description, image, link];
-
-  return new Promise<number>((resolve, reject) => {
-    db.run(insertSql, values, function (err) {
-      if (err) {
-        console.error("Ошибка при вставке элемента:", err.message);
-        reject(err);
-      }
-
-      const id = this.lastID; // Получаем ID последней вставленной строки
-      console.log(`Вставлена строка с ID ${id}`);
-      resolve(id);
-    });
-  });
+    const client = await pool.connect();
+    try {
+        const insertSql = `INSERT INTO project (title, description, image, link) VALUES ($1, $2, $3, $4) RETURNING id`;
+        const res = await client.query(insertSql, [title, description, image, link]);
+        const id = res.rows[0].id;
+        console.log(`Вставлена строка с ID ${id}`);
+        return id;
+    } catch (err) {
+        console.error("Ошибка при вставке проекта:", err instanceof Error ? err.message : "Неизвестная ошибка");
+        throw err;
+    } finally {
+        client.release();
+    }
 }
 
+// Получение всех проектов из базы данных
 export async function fetchProjectsFromDatabase(): Promise<any[]> {
-  const selectSql = `SELECT * FROM project`;
-
-  return new Promise<any[]>((resolve, reject) => {
-    db.all(selectSql, (err, rows) => {
-      if (err) {
-        console.error(
-          "Ошибка при получении проектов из базы данных:",
-          err.message
-        );
-        reject(err);
-      }
-
-      resolve(rows); // Возвращаем массив объектов новостей из базы данных
-    });
-  });
+    const client = await pool.connect();
+    try {
+        const selectSql = `SELECT * FROM project`;
+        const res = await client.query(selectSql);
+        return res.rows;
+    } catch (err) {
+        console.error("Ошибка при получении проектов из базы данных:", err instanceof Error ? err.message : "Неизвестная ошибка");
+        throw err;
+    } finally {
+        client.release();
+    }
 }
 
-export async function deletProject(id: string) {
-  const deletSql = `DELETE FROM project WHERE id = ?`;
-
-  return new Promise<void>((resolve, reject) => {
-    db.run(deletSql, id, function (err) {
-      if (err) {
-        console.error("Ошибка при удалении проекта:", err.message);
-        reject(err);
-      } else {
-        resolve();
-      }
-    });
-  });
+// Удаление проекта по ID
+export async function deletProject(id: string): Promise<void> {
+    const client = await pool.connect();
+    try {
+        const deletSql = `DELETE FROM project WHERE id = $1`;
+        await client.query(deletSql, [id]);
+    } catch (err) {
+        console.error("Ошибка при удалении проекта:", err instanceof Error ? err.message : "Неизвестная ошибка");
+        throw err;
+    } finally {
+        client.release();
+    }
 }
 
-export async function deletFreeProject(id: string) {
-  const deletSql = `DELETE FROM freeproject WHERE id = ?`;
-
-  return new Promise<void>((resolve, reject) => {
-    db.run(deletSql, id, function (err) {
-      if (err) {
-        console.error("Ошибка при удалении площади:", err.message);
-        reject(err);
-      } else {
-        resolve();
-      }
-    });
-  });
+// Удаление проекта из freeproject по ID
+export async function deletFreeProject(id: string): Promise<void> {
+    const client = await pool.connect();
+    try {
+        const deletSql = `DELETE FROM freeproject WHERE id = $1`;
+        await client.query(deletSql, [id]);
+    } catch (err) {
+        console.error("Ошибка при удалении свободного проекта:", err instanceof Error ? err.message : "Неизвестная ошибка");
+        throw err;
+    } finally {
+        client.release();
+    }
 }
 
+// Получение всех свободных проектов из базы данных
 export async function fetchFreeProjectsFromDatabase(): Promise<any[]> {
-  const selectSql = `SELECT * FROM freeproject`;
-
-  return new Promise<any[]>((resolve, reject) => {
-    db.all(selectSql, (err, rows) => {
-      if (err) {
-        console.error(
-          "Ошибка при получении проектов из базы данных:",
-          err.message
-        );
-        reject(err);
-      }
-
-      resolve(rows); // Возвращаем массив объектов новостей из базы данных
-    });
-  });
+    const client = await pool.connect();
+    try {
+        const selectSql = `SELECT * FROM freeproject`;
+        const res = await client.query(selectSql);
+        return res.rows;
+    } catch (err) {
+        console.error("Ошибка при получении свободных проектов из базы данных:", err instanceof Error ? err.message : "Неизвестная ошибка");
+        throw err;
+    } finally {
+        client.release();
+    }
 }
 
+// Добавление проекта в таблицу freeproject
 export async function addFreeProject(
-  title: string,
-  description: string,
-  image: string,
-  link: string
+    title: string,
+    description: string,
+    image: string,
+    link: string
 ): Promise<number> {
-  const insertSql = `INSERT INTO freeproject (title, description, image, link) VALUES(?, ?, ?, ?)`;
-  const values = [title, description, image, link];
-
-  return new Promise<number>((resolve, reject) => {
-    db.run(insertSql, values, function (err) {
-      if (err) {
-        console.error("Ошибка при вставке элемента:", err.message);
-        reject(err);
-      }
-
-      const id = this.lastID; // Получаем ID последней вставленной строки
-      console.log(`Вставлена строка с ID ${id}`);
-      resolve(id);
-    });
-  });
+    const client = await pool.connect();
+    try {
+        const insertSql = `INSERT INTO freeproject (title, description, image, link) VALUES ($1, $2, $3, $4) RETURNING id`;
+        const res = await client.query(insertSql, [title, description, image, link]);
+        const id = res.rows[0].id;
+        console.log(`Вставлена строка с ID ${id}`);
+        return id;
+    } catch (err) {
+        console.error("Ошибка при вставке свободного проекта:", err instanceof Error ? err.message : "Неизвестная ошибка");
+        throw err;
+    } finally {
+        client.release();
+    }
 }
