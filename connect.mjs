@@ -1,8 +1,10 @@
-import {Pool} from 'pg';
+import pg from 'pg';
 
 // Создаем пул соединений с базой данных
+const { Pool } = pg;
+
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: process.env.POSTGRES_URL,
     ssl: {
         rejectUnauthorized: false,
     },
@@ -18,18 +20,11 @@ async function initDatabase() {
         await client.query(`
             CREATE TABLE IF NOT EXISTS items
             (
-                id
-                SERIAL
-                PRIMARY
-                KEY,
-                title
-                TEXT,
-                description
-                TEXT,
-                image
-                TEXT,
-                link
-                TEXT
+                id SERIAL PRIMARY KEY,
+                title TEXT,
+                description TEXT,
+                image TEXT,
+                link TEXT
             )
         `);
         console.log("Created items table.");
@@ -37,18 +32,9 @@ async function initDatabase() {
         await client.query(`
             CREATE TABLE IF NOT EXISTS users
             (
-                id
-                SERIAL
-                PRIMARY
-                KEY,
-                username
-                TEXT
-                NOT
-                NULL,
-                password
-                TEXT
-                NOT
-                NULL
+                id SERIAL PRIMARY KEY,
+                username TEXT NOT NULL,
+                password TEXT NOT NULL
             )
         `);
         console.log("Created users table.");
@@ -61,18 +47,11 @@ async function initDatabase() {
         await client.query(`
             CREATE TABLE IF NOT EXISTS project
             (
-                id
-                SERIAL
-                PRIMARY
-                KEY,
-                title
-                TEXT,
-                description
-                TEXT,
-                image
-                TEXT,
-                link
-                TEXT
+                id SERIAL PRIMARY KEY,
+                title TEXT,
+                description TEXT,
+                image TEXT,
+                link TEXT
             )
         `);
         console.log("Created project table.");
@@ -80,23 +59,16 @@ async function initDatabase() {
         await client.query(`
             CREATE TABLE IF NOT EXISTS freeproject
             (
-                id
-                SERIAL
-                PRIMARY
-                KEY,
-                title
-                TEXT,
-                description
-                TEXT,
-                image
-                TEXT,
-                link
-                TEXT
+                id SERIAL PRIMARY KEY,
+                title TEXT,
+                description TEXT,
+                image TEXT,
+                link TEXT
             )
         `);
         console.log("Created freeproject table.");
     } catch (err) {
-        console.error("Error initializing the database:", err.message);
+        console.error("Error initializing the database:", err instanceof Error ? err.message : "Unknown error");
         throw err;
     } finally {
         client.release();
