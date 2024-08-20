@@ -5,7 +5,7 @@ import Header from "@/components/ui/header";
 import { useRef } from "react";
 
 
-
+export const revalidate = 0;
 const Home: React.FC = () => {
   const contactsRef = useRef<HTMLDivElement | null>(null);
 
