@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
-interface FreeProjectItem {
+export interface FreeProjectItem {
   id: string;
   date: string;
   title: string;
@@ -11,7 +11,11 @@ interface FreeProjectItem {
   link: string;
 }
 
-export default function FreeProject() {
+interface ProjectsProps {
+  freeprojects : FreeProjectItem[];
+}
+
+export default function FreeProject({freeprojects = []}: ProjectsProps ) {
   const [blogs, setBlogs] = useState<FreeProjectItem[]>([]);
 
   const [loading, setLoading] = useState(true);
@@ -20,7 +24,7 @@ export default function FreeProject() {
     async function fetchProjects() {
       try {
         const res = await fetch("/api/getfreeproject"); // Вызов API метода GET
-        const data = await res.json();
+        const data = freeprojects;
         setBlogs(data); // Устанавливаем полученные данные в состояние
       } catch (error) {
         console.error("Ошибка при загрузке проектов:", error);

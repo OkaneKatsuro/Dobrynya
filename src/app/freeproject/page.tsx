@@ -1,25 +1,36 @@
 "use client"
-import FreeProject from "@/components/FreeProject";
+import FreeProject, {FreeProjectItem} from "@/components/FreeProject";
 import SectionContacts from "@/components/sectioncontact";
 import Header from "@/components/ui/header";
-import { useRef } from "react";
+import {useRef} from "react";
+import {fetchFreeProjectsFromDatabase, initDatabase} from "@/db/db";
 
 
 export const revalidate = 0;
-const Home: React.FC = () => {
-  const contactsRef = useRef<HTMLDivElement | null>(null);
 
-  const scrollToContacts = () => {
-    contactsRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+export default async function Home() {
 
-  return (
-    <>
-      <Header scrollToContacts={scrollToContacts} />
-      <FreeProject />
-      <SectionContacts/>
-    </>
-  );
+    await initDatabase();
+
+    let freeprojects: FreeProjectItem[] = [];
+
+    const contactsRef = useRef<HTMLDivElement | null>(null);
+
+    const scrollToContacts = () => {
+        contactsRef.current?.scrollIntoView({behavior: "smooth"});
+    };
+
+    try {
+        freeprojects = await fetchFreeProjectsFromDatabase();
+    } catch (err){
+        console.error("Ошибка при получении свободных площадей :", err);
+    }
+
+    return (
+        <>
+            <Header scrollToContacts={scrollToContacts}/>
+            <FreeProject freeprojects={freeprojects}/>
+            <SectionContacts/>
+        </>
+    );
 }
-
-export default Home;
