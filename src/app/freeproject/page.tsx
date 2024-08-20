@@ -2,15 +2,14 @@
 import FreeProject, {FreeProjectItem} from "@/components/FreeProject";
 import SectionContacts from "@/components/sectioncontact";
 import Header from "@/components/ui/header";
-import {useRef} from "react";
-import {fetchFreeProjectsFromDatabase, initDatabase} from "@/db/db";
+import {useEffect, useRef, useState} from "react";
 
 
 export const revalidate = 0;
 
 export default async function Home() {
 
-    await initDatabase();
+
 
     let freeprojects: FreeProjectItem[] = [];
 
@@ -20,16 +19,30 @@ export default async function Home() {
         contactsRef.current?.scrollIntoView({behavior: "smooth"});
     };
 
-    try {
-        freeprojects = await fetchFreeProjectsFromDatabase();
-    } catch (err){
-        console.error("Ошибка при получении свободных площадей :", err);
-    }
+    const [blogs, setBlogs] = useState<FreeProjectItem[]>([]);
+
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchProjects() {
+            try {
+                const res = await fetch("/api/getfreeproject"); // Вызов API метода GET
+                const data = await res.json();
+                setBlogs(data); // Устанавливаем полученные данные в состояние
+            } catch (error) {
+                console.error("Ошибка при загрузке проектов:", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchProjects();
+    }, []);
 
     return (
         <>
             <Header scrollToContacts={scrollToContacts}/>
-            <FreeProject freeprojects={freeprojects}/>
+            <FreeProject freeprojects={blogs} loadingState={loading}/>
             <SectionContacts/>
         </>
     );
