@@ -18,25 +18,7 @@ interface ProjectsProps {
 
 
 export default function FreeProject({freeprojects = [], loadingState}: ProjectsProps) {
-    const [blogs, setBlogs] = useState<FreeProjectItem[]>([]);
 
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        async function fetchProjects() {
-            try {
-                const res = await fetch("/api/getfreeproject"); // Вызов API метода GET
-                const data = freeprojects;
-                setBlogs(data); // Устанавливаем полученные данные в состояние
-            } catch (error) {
-                console.error("Ошибка при загрузке проектов:", error);
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        fetchProjects();
-    }, []);
 
     if (loadingState) {
         return (
@@ -69,7 +51,7 @@ export default function FreeProject({freeprojects = [], loadingState}: ProjectsP
                     Свободные площади Торгового центра "Добрыня"
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {blogs.map((blog) => (
+                    {freeprojects.map((blog) => (
                         <div
                             key={blog.id}
                             className="bg-white shadow-md rounded-lg overflow-hidden"
