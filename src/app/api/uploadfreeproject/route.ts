@@ -1,40 +1,32 @@
 "use server";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
-import { writeFile } from "fs/promises";
-import { initDatabase, addProject, addFreeProject } from "@/db/db"; // Импорт функций работы с базой данных
+import { initDatabase, addFreeProject } from "@/db/db";
 
 export async function POST(req: NextRequest) {
   await initDatabase(); // Инициализируем базу данных при запуске запроса
 
   try {
     const formData = await req.formData();
-    const file = formData.get("file") as File; // Приводим к типу File
+    const file = formData.get("file") as File;
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
     const link = formData.get("link") as string;
 
     if (!file) {
       return NextResponse.json(
-        { error: "No files received." },
-        { status: 400 }
+          { error: "No files received." },
+          { status: 400 }
       );
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    const filename = Date.now() + "_" + file.name.replaceAll(" ", "_");
-    const uploadPath = path.join(process.cwd(), "public/uploadsFreeProjects", filename);
-
-    await writeFile(uploadPath, buffer);
-    const imageUrl = `/uploadsFreeProjects/${filename}`;
 
     // Сохраняем информацию о файле в базу данных
-    const itemId = await addFreeProject(title, description, imageUrl, link);
+    const itemId = await addFreeProject(title, description, buffer, link);
 
     return NextResponse.json({
       message: "Success",
       itemId,
-      imageUrl,
       status: 201,
     });
   } catch (error: any) {

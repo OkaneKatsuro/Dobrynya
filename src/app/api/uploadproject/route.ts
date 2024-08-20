@@ -22,19 +22,17 @@ export async function POST(req: NextRequest) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    const filename = Date.now() + "_" + file.name.replaceAll(" ", "_");
-    const uploadPath = path.join(process.cwd(), "public/uploadsProjects", filename);
 
-    await writeFile(uploadPath, buffer);
-    const imageUrl = `/uploadsProjects/${filename}`;
+
+
 
     // Сохраняем информацию о файле в базу данных
-    const itemId = await addProject(title, description, imageUrl, link);
+    const itemId = await addProject(title, description, buffer, link);
 
     return NextResponse.json({
       message: "Success",
       itemId,
-      imageUrl,
+
       status: 201,
     });
   } catch (error: any) {

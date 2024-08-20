@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-
+const url ='postgres://default:Uq6eMnKFz2gb@ep-shiny-king-a264fs0o-pooler.eu-central-1.aws.neon.tech:5432/verceldb?sslmode=require';
 const pool = new Pool({
     connectionString: process.env.POSTGRES_URL,
     ssl: {
@@ -39,7 +39,7 @@ export async function initDatabase() {
 export async function addItem(
     title: string,
     description: string,
-    image: string,
+    image: Buffer,
     link: string
 ): Promise<number> {
     const client = await pool.connect();
@@ -63,7 +63,10 @@ export async function fetchNewsFromDatabase(): Promise<any[]> {
     try {
         const selectSql = `SELECT * FROM items`;
         const res = await client.query(selectSql);
-        return res.rows;
+        return res.rows.map(row => ({
+            ...row,
+            image: row.image ? `data:image/jpeg;base64,${row.image.toString('base64')}` : null
+        }));
     } catch (err) {
         console.error("Ошибка при получении новостей из базы данных:", err instanceof Error ? err.message : "Неизвестная ошибка");
         throw err;
@@ -116,7 +119,7 @@ export async function deletNews(id: string): Promise<void> {
 export async function addProject(
     title: string,
     description: string,
-    image: string,
+    image: Buffer,
     link: string
 ): Promise<number> {
     const client = await pool.connect();
@@ -140,7 +143,10 @@ export async function fetchProjectsFromDatabase(): Promise<any[]> {
     try {
         const selectSql = `SELECT * FROM project`;
         const res = await client.query(selectSql);
-        return res.rows;
+        return res.rows.map(row => ({
+            ...row,
+            image: row.image ? `data:image/jpeg;base64,${row.image.toString('base64')}` : null
+        }));
     } catch (err) {
         console.error("Ошибка при получении проектов из базы данных:", err instanceof Error ? err.message : "Неизвестная ошибка");
         throw err;
@@ -183,7 +189,12 @@ export async function fetchFreeProjectsFromDatabase(): Promise<any[]> {
     try {
         const selectSql = `SELECT * FROM freeproject`;
         const res = await client.query(selectSql);
-        return res.rows;
+
+        // Преобразуйте изображение в формат base64
+        return res.rows.map(row => ({
+            ...row,
+            image: row.image ? `data:image/jpeg;base64,${row.image.toString('base64')}` : null
+        }));
     } catch (err) {
         console.error("Ошибка при получении свободных проектов из базы данных:", err instanceof Error ? err.message : "Неизвестная ошибка");
         throw err;
@@ -192,11 +203,10 @@ export async function fetchFreeProjectsFromDatabase(): Promise<any[]> {
     }
 }
 
-// Добавление проекта в таблицу freeproject
 export async function addFreeProject(
     title: string,
     description: string,
-    image: string,
+    image: Buffer,
     link: string
 ): Promise<number> {
     const client = await pool.connect();
@@ -204,10 +214,10 @@ export async function addFreeProject(
         const insertSql = `INSERT INTO freeproject (title, description, image, link) VALUES ($1, $2, $3, $4) RETURNING id`;
         const res = await client.query(insertSql, [title, description, image, link]);
         const id = res.rows[0].id;
-        console.log(`Вставлена строка с ID ${id}`);
+        console.log(`Inserted row with ID ${id}`);
         return id;
     } catch (err) {
-        console.error("Ошибка при вставке свободного проекта:", err instanceof Error ? err.message : "Неизвестная ошибка");
+        console.error("Error inserting free project:", err instanceof Error ? err.message : "Unknown error");
         throw err;
     } finally {
         client.release();

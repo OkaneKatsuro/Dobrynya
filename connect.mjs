@@ -4,10 +4,10 @@ import dotenv from 'dotenv';
 dotenv.config(); // Загрузите переменные окружения
 
 const { Pool } = pg;
-
+const url ='postgres://default:Uq6eMnKFz2gb@ep-shiny-king-a264fs0o-pooler.eu-central-1.aws.neon.tech:5432/verceldb?sslmode=require';
 const pool = new Pool({
     connectionString: process.env.POSTGRES_URL,
-})
+});
 
 async function initDatabase() {
     const client = await pool.connect();
@@ -19,7 +19,7 @@ async function initDatabase() {
                 id SERIAL PRIMARY KEY,
                 title TEXT,
                 description TEXT,
-                image TEXT,
+                image BYTEA,
                 link TEXT
             )
         `);
@@ -46,7 +46,7 @@ async function initDatabase() {
                 id SERIAL PRIMARY KEY,
                 title TEXT,
                 description TEXT,
-                image TEXT,
+                image BYTEA,
                 link TEXT
             )
         `);
@@ -58,7 +58,7 @@ async function initDatabase() {
                 id SERIAL PRIMARY KEY,
                 title TEXT,
                 description TEXT,
-                image TEXT,
+                image BYTEA,
                 link TEXT
             )
         `);
