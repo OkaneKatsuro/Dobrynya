@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 const url ='postgres://default:Uq6eMnKFz2gb@ep-shiny-king-a264fs0o-pooler.eu-central-1.aws.neon.tech:5432/verceldb?sslmode=require';
 const pool = new Pool({
-    connectionString: process.env.POSTGRES_URL,
+    connectionString: url,
     ssl: {
         rejectUnauthorized: false,
     },
