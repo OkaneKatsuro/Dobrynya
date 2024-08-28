@@ -1,10 +1,26 @@
 import { type NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
+import axios from "axios";
 
 export async function POST(request: NextRequest) {
   // Получаем данные из запроса
-  const { email, name, message, idea } = await request.json();
+  const { email, name, message, idea, recaptchaToken } = await request.json();
+
+  // Проверка reCAPTCHA токена
+  const secretKey = "6Lf-zTAqAAAAADNi2Z5g6U-0KEfx2AN7MaLVmmqs"; // Ваш секретный ключ
+  const recaptchaUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptchaToken}`;
+
+  try {
+    const recaptchaResponse = await axios.post(recaptchaUrl);
+    const recaptchaSuccess = recaptchaResponse.data.success;
+
+    if (!recaptchaSuccess) {
+      return NextResponse.json({ error: "Invalid reCAPTCHA" }, { status: 400 });
+    }
+  } catch (error) {
+    return NextResponse.json({ error: "reCAPTCHA verification failed" }, { status: 500 });
+  }
 
   // Настройка транспорта для отправки почты
   const transport = nodemailer.createTransport({
@@ -32,15 +48,15 @@ export async function POST(request: NextRequest) {
 
   // Отправка письма
   const sendMailPromise = () =>
-    new Promise<string>((resolve, reject) => {
-      transport.sendMail(mailOptions, function (err) {
-        if (!err) {
-          resolve("Email sent");
-        } else {
-          reject(err.message);
-        }
+      new Promise<string>((resolve, reject) => {
+        transport.sendMail(mailOptions, function (err) {
+          if (!err) {
+            resolve("Email sent");
+          } else {
+            reject(err.message);
+          }
+        });
       });
-    });
 
   try {
     await sendMailPromise();
