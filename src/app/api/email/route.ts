@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
   const { email, name, message, idea, recaptchaToken } = await request.json();
 
   // Проверка reCAPTCHA токена
-  const secretKey = "6Lf-zTAqAAAAADNi2Z5g6U-0KEfx2AN7MaLVmmqs"; // Ваш секретный ключ
+  const secretKey = "6Lcm3jAqAAAAAKYS3zwN7_-ic9iA_HpAHGQijFUG"; // Ваш секретный ключ
   const recaptchaUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptchaToken}`;
 
   try {

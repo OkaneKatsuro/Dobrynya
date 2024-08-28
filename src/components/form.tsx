@@ -96,7 +96,7 @@ const Form: React.FC = () => {
                                                 ></textarea>
                                             </div>
                                             <ReCAPTCHA
-                                                sitekey="6Lf-zTAqAAAAADNi2Z5g6U-0KEfx2AN7MaLVmmqs" // Ваш Site Key
+                                                sitekey="6Lcm3jAqAAAAAFh6N7TqcwrH66ZfzpJlXuyoXuOA" // Ваш Site Key
                                                 onChange={handleCaptchaChange}
                                             />
                                             <div className="flex-col justify-center items-center mt-4">
