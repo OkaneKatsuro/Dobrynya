@@ -1,132 +1,136 @@
 "use client";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import "@/components/styles/Form.scss";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { sendEmail } from "./utils/send-email";
+import {useForm, SubmitHandler} from "react-hook-form";
+import {sendEmail} from "./utils/send-email";
 import Input from "./ui/inputs/forminput";
+
 import ReCAPTCHA from "react-google-recaptcha";
 
 export type FormData = {
-  name: string;
-  email: string;
-  message: string;
-  idea: string;
-  recaptchaToken?: string; // Добавляем поле для токена reCAPTCHA
+    name: string;
+    email: string;
+    message: string;
+    idea: string;
+    recaptchaToken?: string; // Добавляем поле для токена reCAPTCHA
 };
 
 const Form: React.FC = () => {
-  const { register, handleSubmit } = useForm<FormData>();
-  const [isChecked, setIsChecked] = useState(false);
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+    const {register, handleSubmit} = useForm<FormData>();
+    const [isChecked, setIsChecked] = useState(false);
+    const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    if (captchaToken) {
-      data.recaptchaToken = captchaToken; // Добавляем токен в данные формы
-      sendEmail(data);
-    } else {
-      console.error("Captcha verification failed.");
-    }
-  };
+    const onSubmit: SubmitHandler<FormData> = (data) => {
+        if (captchaToken) {
+            data.recaptchaToken = captchaToken; // Добавляем токен в данные формы
+            sendEmail(data);
+        } else {
+            console.error("Captcha verification failed.");
+        }
+    };
 
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(event.target.checked);
-  };
+    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setIsChecked(event.target.checked);
+    };
 
-  useEffect(() => {
-    const button = document.getElementById(
-        "submit-button"
-    ) as HTMLButtonElement;
-    button.disabled = !isChecked;
-  }, [isChecked]);
+    useEffect(() => {
+        const button = document.getElementById(
+            "submit-button"
+        ) as HTMLButtonElement;
+        button.disabled = !isChecked;
+    }, [isChecked]);
 
-  const handleCaptchaChange = (token: string | null) => {
-    setCaptchaToken(token);
-  };
+    const handleCaptchaChange = (token: string | null) => {
+        setCaptchaToken(token);
+    };
 
-  return (
-      <section id="contact-form" className="section flex justify-center">
-        <div className="flex flex-col md:flex-row items-center w-full max-w-screen-lg">
-          <div className="hidden md:flex md:w-2/3 mb-8 md:mb-0 md:pr-8 items-center justify-center">
-            <div className="bg-gray-100 border border-gray-300 rounded-lg p-6 shadow-md">
-              <p className="font-medium text-black dark:text-black-200 text-2xl md:text-4xl text-center">
-                Чем мы можем вам помочь? Оставьте свои контактные данные и расскажите о своем запросе — мы свяжемся с вами в ближайшее время
-              </p>
-            </div>
-          </div>
-          <div className="flex justify-center items-center pt-8 md:w-2/3">
-            <div className="bg-white drop-shadow-lg container w-full border md:border-gray-300 rounded py-2 mx-auto">
-              <div className="m-9">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className="items-center text-center">
-                    <div className="text-black text-4xl font-bold mb-4 text-center">
-                      Свяжитесь с нами
+    return (
+        <section id="contact-form" className="section flex justify-center">
+            <div className="flex flex-col md:flex-row items-center w-full max-w-screen-lg">
+                <div className="hidden md:flex md:w-2/3 mb-8 md:mb-0 md:pr-8 items-center justify-center">
+                    <div className="bg-gray-100 border border-gray-300 rounded-lg p-6 shadow-md">
+                        <p className="font-medium text-black dark:text-black-200 text-2xl md:text-4xl text-center">
+                            Чем мы можем вам помочь? Оставьте свои контактные данные и расскажите о своем запросе — мы
+                            свяжемся с вами в ближайшее время
+                        </p>
                     </div>
-                  </div>
-                  <div className="mt-3 grid grid-cols-1 gap-x-6 gap-y-8">
-                    <div className="col-span-4">
-                      <div className="space-y-10">
-                        <Input
-                            register={register}
-                            name="name"
-                            placeholder="Ваше имя"
-                        />
-                        <Input
-                            register={register}
-                            name="email"
-                            placeholder="example@yourmail.com"
-                        />
-                        <Input
-                            register={register}
-                            name="message"
-                            placeholder="+7(XXX)-XXX-XX-XX"
-                        />
-                        <div className="mb-4">
-                          <label htmlFor="idea" className="block text-sm font-medium text-gray-700">
-                            Расскажите о себе и о своей идее
-                          </label>
-                          <textarea
-                              id="idea"
-                              {...register("idea")}
-                              placeholder="Ваша идея..."
-                              className="border border-gray-300 rounded-md p-2 w-full h-32 resize-none text-black"
-                          ></textarea>
+                </div>
+                <div className="flex justify-center items-center pt-8 md:w-2/3">
+                    <div
+                        className="bg-white drop-shadow-lg container w-full border md:border-gray-300 rounded py-2 mx-auto">
+                        <div className="m-9">
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <div className="items-center text-center">
+                                    <div className="text-black text-4xl font-bold mb-4 text-center">
+                                        Свяжитесь с нами
+                                    </div>
+                                </div>
+                                <div className="mt-3 grid grid-cols-1 gap-x-6 gap-y-8">
+                                    <div className="col-span-4">
+                                        <div className="space-y-10">
+                                            <Input
+                                                register={register}
+                                                name="name"
+                                                placeholder="Ваше имя"
+                                            />
+                                            <Input
+                                                register={register}
+                                                name="email"
+                                                placeholder="example@yourmail.com"
+                                            />
+                                            <Input
+                                                register={register}
+                                                name="message"
+                                                placeholder="+7(XXX)-XXX-XX-XX"
+                                            />
+                                            <div className="mb-4">
+                                                <label htmlFor="idea"
+                                                       className="block text-sm font-medium text-gray-700">
+                                                    Расскажите о себе и о своей идее
+                                                </label>
+                                                <textarea
+                                                    id="idea"
+                                                    {...register("idea")}
+                                                    placeholder="Ваша идея..."
+                                                    className="border border-gray-300 rounded-md p-2 w-full h-32 resize-none text-black"
+                                                ></textarea>
+                                            </div>
+                                            <ReCAPTCHA
+                                                sitekey="6Lf-zTAqAAAAADNi2Z5g6U-0KEfx2AN7MaLVmmqs" // Ваш Site Key
+                                                onChange={handleCaptchaChange}
+                                            />
+                                            <div className="flex-col justify-center items-center mt-4">
+                                                <button
+                                                    id="submit-button"
+                                                    type="submit"
+                                                    className={`text-white bg-green-600 hover:bg-purple-600 focus:ring-4 focus:ring-green-600 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-green-600 dark:hover:bg-green-600 focus:outline-none dark:focus:ring-green-600 ${isChecked ? "" : "opacity-50 cursor-not-allowed"}`}
+                                                    disabled={!isChecked}
+                                                >
+                                                    Отправить письмо
+                                                </button>
+                                                <div className="flex items-start justify-start mt-3">
+                                                    <input
+                                                        type="checkbox"
+                                                        id="consent"
+                                                        checked={isChecked}
+                                                        onChange={handleCheckboxChange}
+                                                    />
+                                                    <label htmlFor="consent" className="ml-2 text-sm text-gray-600">
+                                                        Я согласен с условиями обработки данных
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div></div>
                         </div>
-                        <ReCAPTCHA
-                            sitekey="6Lf-zTAqAAAAADNi2Z5g6U-0KEfx2AN7MaLVmmqs" // Ваш Site Key
-                            onChange={handleCaptchaChange}
-                        />
-                        <div className="flex-col justify-center items-center mt-4">
-                          <button
-                              id="submit-button"
-                              type="submit"
-                              className={`text-white bg-green-600 hover:bg-purple-600 focus:ring-4 focus:ring-green-600 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-green-600 dark:hover:bg-green-600 focus:outline-none dark:focus:ring-green-600 ${isChecked ? "" : "opacity-50 cursor-not-allowed"}`}
-                              disabled={!isChecked}
-                          >
-                            Отправить письмо
-                          </button>
-                          <div className="flex items-start justify-start mt-3">
-                            <input
-                                type="checkbox"
-                                id="consent"
-                                checked={isChecked}
-                                onChange={handleCheckboxChange}
-                            />
-                            <label htmlFor="consent" className="ml-2 text-sm text-gray-600">
-                              Я согласен с условиями обработки данных
-                            </label>
-                          </div>
-                        </div>
-                      </div>
                     </div>
-                  </div>
-                </form>
-                <div></div>
-              </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </section>
-  );
+        </section>
+    );
 };
 
 export default Form;
